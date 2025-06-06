@@ -5,4 +5,6 @@ export type PaymentDataType = {
   }
   paymentToken: string
   companyId: string
+  planId: string
+  periodicity: string
 }
