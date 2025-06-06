@@ -1,7 +1,8 @@
 import axios from 'axios'
+import type { PaymentDataType } from '../domain/payments'
 import { getIdempotencyKey } from '../utils/idempotency'
 
-export const payWithBoleto = async (data: any, context: any) => {
+export const payWithBoleto = async (data: PaymentDataType) => {
   const { amount, customerInfo, companyId } = data
 
   const idempotencyKey = getIdempotencyKey('boleto', customerInfo.id, amount)

@@ -1,16 +1,22 @@
-import { validateEfiSignature } from '../utils/validateEfiSignature'
+import dayjs from 'dayjs'
+import type { Request, Response } from 'express'
 import { db } from '../config'
 import { sendMail } from '../mail/sendMail'
-import * as functions from 'firebase-functions'
-import dayjs from 'dayjs'
+import { validateEfiSignature } from '../utils/validateEfiSignature'
 
-export const efiWebhook = async (req: any, res: any) => {
+type RequestWithRawBody = Request & { rawBody: Buffer }
+
+export const efiWebhook = async (
+  req: RequestWithRawBody,
+  res: Response
+): Promise<void> => {
   const signature = req.headers['x-efi-signature'] as string
   const body = req.rawBody
 
   if (!validateEfiSignature(signature, body)) {
     console.error('Invalid EFI Signature')
-    return res.status(401).send('Unauthorized')
+    res.status(401).send('Unauthorized')
+    return
   }
 
   const event = req.body
@@ -89,5 +95,6 @@ export const efiWebhook = async (req: any, res: any) => {
     })
   }
 
-  return res.status(200).send('OK')
+  res.status(200).send('OK')
+  return
 }
