@@ -1,8 +1,8 @@
 import * as functions from 'firebase-functions'
-import { payWithPix } from './payments/payWithPix'
-import { payWithCreditSubscription } from './payments/payWithCreditSubscription'
-import { payWithCredit } from './payments/payWithCredit'
 import { payWithBoleto } from './payments/payWithBoleto'
+import { payWithCredit } from './payments/payWithCredit'
+import { payWithCreditSubscription } from './payments/payWithCreditSubscription'
+import { payWithPix } from './payments/payWithPix'
 import { efiWebhook } from './webhooks/efiWebhook'
 
 export const payWithPixFunction = functions.https.onCall(payWithPix)

@@ -1,7 +1,12 @@
 import axios from 'axios'
+import type { https } from 'firebase-functions'
+import type { PaymentDataType } from '../domain/payments'
 import { getIdempotencyKey } from '../utils/idempotency'
 
-export const payWithPix = async (data: any, context: any) => {
+export const payWithPix = async (
+  data: PaymentDataType,
+  context: https.CallableContext
+) => {
   const { amount, customerInfo, companyId } = data
 
   const idempotencyKey = getIdempotencyKey('pix', customerInfo.id, amount)
